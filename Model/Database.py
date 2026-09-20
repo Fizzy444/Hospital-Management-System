@@ -17,3 +17,4 @@ class Database:
         self.nxt_medical_record_id = 0
         self.nxt_item_id = 0
         self.nxt_bill_id = 0
+        self.nxt_room_id = 0

@@ -1,6 +1,7 @@
 from Controller.BillController import BillController
 from Controller.DepartmentController import DepartmentController
 from Controller.DoctorController import DoctorController
+from Controller.RoomBedController import RoomBedController
 
 
 class AdminController:
@@ -24,13 +25,15 @@ class AdminController:
         self.doctor_controller = DoctorController(self.db)
         self.dept_controller = DepartmentController(self.db)
         self.bill_controller = BillController(self.db)
+        self.room_bed_controller = RoomBedController(self.db)
 
         while True:
             print("\n---Admin Console---")
             print("1.Manage Doctors")
             print("2.Manage Departments")
             print("3.Generate Bill")
-            print("4.Logout")
+            print("4.Create Entry for Beds")
+            print("5.Logout")
 
             try:
                 ch = int(input("Enter your choice: "))
@@ -41,6 +44,8 @@ class AdminController:
                 elif ch == 3:
                     self.bill_controller.admin_generate_bill()
                 elif ch == 4:
+                    self.room_bed_controller.admin_create_bed()
+                elif ch == 5:
                     print("Logging Out...")
                     break
                 else:

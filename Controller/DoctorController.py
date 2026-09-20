@@ -1,4 +1,5 @@
 from Controller.MedicalRecordController import MedicalRecordController
+from Controller.RoomBedController import RoomBedController
 from Model.Doctor import Doctor
 
 
@@ -28,13 +29,16 @@ class DoctorController:
 
     def doctor_dashboard(self, doc):
         self.med_rec = MedicalRecordController(self.db)
+        self.room_bed = RoomBedController(self.db)
         while True:
             print(f"\n---{doc.doctor_name}'s Dashboard---")
             print("1.View My Appointments")
             print("2.Add Medical Records for a Patient")
             print("3.Write a Prescription")
             print("4.View Medical History of a Patient")
-            print("5.Log Out")
+            print("5.Admit a Patient")
+            print("6.Discharge a Patient")
+            print("7.Log Out")
 
             try:
                 ch = int(input("Enter your choice: "))
@@ -47,6 +51,12 @@ class DoctorController:
                 elif ch == 4:
                     self.med_rec.view_medical_history()
                 elif ch == 5:
+                    pat_id = int(input("Enter Patient ID to be admitted:"))
+                    self.room_bed.admit_patient(pat_id)
+                elif ch == 6:
+                    pat_id = int(input("Enter Patient ID to be Discharged:"))
+                    self.room_bed.discharge_patient(pat_id)
+                elif ch == 7:
                     print("Logging Out...")
                     break
                 else:

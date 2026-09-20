@@ -1,5 +1,5 @@
 class Room_Bed:
-    def __init__(self, admission_id, patient_id, room_id, bed_id, admission_date, discharge_date):
+    def __init__(self, bed_id):
         self.bed_id = bed_id
         self.status = "Available"
         self.patient_id = None
