@@ -59,7 +59,7 @@ class DoctorController:
     def admin_add_doctor(self):
         name = input("Enter name: ")
         dept_id = int(input("Enter department_id: "))
-        specialization = input("Enter Specialization: ")
+        specialization = input("Enter Specialization: ").lower()
         available = True
         password = input("Enter Password: ")
         self.nxt_doctor_id += 1

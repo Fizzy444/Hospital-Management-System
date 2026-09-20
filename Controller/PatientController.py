@@ -1,3 +1,4 @@
+from Controller.AppointmentController import AppointmentController
 from Model.Patient import Patient
 
 
@@ -47,16 +48,25 @@ class PatientController:
             self.patient_dashboard(patient)
 
     def patient_dashboard(self, patient):
+        apt_controller = AppointmentController(self.db, patient)
         while True:
             print(f"\n{patient.name}'s Dashboard")
             print("1.View My Profile")
-            print("2.Logout")
+            print("2.Book an Appointment")
+            print("3.View my Appointments")
+            print("4.Cancel Appointments")
+            print("5.View Doctors")
+            print("6.Logout")
 
             try:
                 ch = int(input("Enter your choice: "))
                 if ch == 1:
                     print(f"Patiend_ID: {patient.patient_id} | Name: {patient.name} | Age: {patient.age} | Contact_Details: {patient.contact_details}")
                 elif ch == 2:
+                    apt_controller.book_an_appointment()
+
+
+                elif ch == 6:
                     print("Logging Out...")
                     break
                 else:

@@ -7,8 +7,6 @@ class AdminController:
         self.db = database
         self.__adminID = "admin"
         self.__adminPassword = "admin"
-        self.doctor_controller = DoctorController(self.db)
-        self.dept_controller = DepartmentController(self.db)
 
     def login(self):
         print("\nAdmin Login...")
@@ -22,6 +20,8 @@ class AdminController:
             print("Invalid Credentials")
 
     def admin_console(self):
+        self.doctor_controller = DoctorController(self.db)
+        self.dept_controller = DepartmentController(self.db)
         while True:
             print("\n---Admin Console---")
             print("1.Manage Doctors")
