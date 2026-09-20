@@ -1,5 +1,3 @@
-from typing_extensions import ParamSpecKwargs
-
 from Model.Appointment import Appointment
 
 
@@ -42,7 +40,7 @@ class AppointmentController:
     def cancel_appointment(self):
         apt_id = int(input("Enter Appointment_ID to Cancel: "))
         for apt in self.db.appointments:
-            if apt.patient_id == self.patient.patient_id:
+            if apt.patient_id == apt_id:
                 print("Found appointment:")
                 print(f"{apt.appointment_id} | {apt.patient_id} | {apt.doctor_id} | {apt.appointment_date} | {apt.appointment_time} | {apt.status}")
                 ch = input("Are you sure you wanna Cancel Appointment (Y/N): ").upper()

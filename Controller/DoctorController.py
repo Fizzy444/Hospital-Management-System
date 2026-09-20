@@ -1,10 +1,16 @@
 from Model.Doctor import Doctor
+from Model.Medical_Record import Medical_Record
+from Model.Prescription import Prescription
+from Model.Prescription_Item import Prescription_Item
 
 
 class DoctorController:
     def __init__(self, database):
         self.db = database
         self.nxt_doctor_id = 0
+        self.nxt_prescription_id = 0
+        self.nxt_medical_record_id = 0
+        self.nxt_item_id = 0
         self.doc = None
 
     def login(self):
@@ -38,11 +44,11 @@ class DoctorController:
             try:
                 ch = int(input("Enter your choice: "))
                 if ch == 1:
-                    self.view_appointments()
+                    self.view_appointments(doc)
                 elif ch == 2:
-                    self.add_medical_record()
+                    self.add_medical_record(doc)
                 elif ch == 3:
-                    self.write_prescription()
+                    self.write_prescription(doc)
                 elif ch == 4:
                     self.view_medical_history()
                 elif ch == 5:
@@ -53,17 +59,79 @@ class DoctorController:
             except ValueError:
                 print("Enter a Valid number")
 
-    def view_appointments(self):
-        pass
+    def view_appointments(self, doc):
+        found = False
+        for apt in self.db.appointments:
+            if apt.doctor_id == doc.doctor_id:
+                print(f"{apt.appointment_id} | {apt.patient_id} | {apt.doctor_id} | {apt.appointment_date} | {apt.appointment_time} | {apt.status}")
+                found = True
+        if not found:
+            print("No Appointments available")
 
-    def add_medical_record(self):
-        pass
+    def add_medical_record(self, doc):
+        pat_id = int(input("Enter PatientID: "))
+        consult = input("Enter Consultation Details: ")
+        diagnosis = input("Enter Diagnosis Details: ")
 
-    def write_prescription(self):
-        pass
+        import datetime
+
+        day = datetime.datetime.now(tz=datetime.UTC).date()
+        today = day.strftime("%d-%m-%Y")
+
+        self.nxt_medical_record_id += 1
+        med_rec = Medical_Record(self.nxt_medical_record_id, pat_id, doc.doctor_id, consult, diagnosis, today)
+        self.db.medical_records.append(med_rec)
+        print("Successfully Added Medical Record")
+
+    def write_prescription(self, doc):
+        pat_id = int(input("Enter PatientID: "))
+        med_rec = None
+        for mr in self.db.medical_record[::-1]:
+            if mr.patient_id == pat_id:
+                med_rec = mr
+                break
+
+        if med_rec is None:
+            print("No Records Available for this Patient, to add Prescription create a medical record")
+            return
+
+        import datetime
+
+        day = datetime.datetime.now(tz=datetime.UTC).date()
+        today = day.strftime("%d-%m-%Y")
+
+        self.nxt_prescription_id += 1
+        pres = Prescription(self.nxt_prescription_id, med_rec.record_id, pat_id, doc.doctor_id, today)
+        self.db.prescriptions.append(pres)
+        print("Successfully Created Prescription")
+
+        while True:
+            med_name = input("Enter Medicine name: ")
+            dosage = input("Enter Dosage: ")
+            duration = input("Enter Duration: ")
+            instruct = input("Enter Instructions: ")
+
+            self.nxt_item_id += 1
+            pres_item = Prescription_Item(self.nxt_item_id, self.nxt_prescription_id, med_name, dosage, duration, instruct)
+            self.db.prescription_items.append(pres_item)
+            print("Successfully Added Prescription Item")
+            ch = input("Add Another? (Y/N): ").upper()
+            if ch == "N":
+                break
+        print("Prescription Saved Successfully")
+
 
     def view_medical_history(self):
-        pass
+        pat_id = int(input("Enter Patient ID to view Medical History: "))
+        found = False
+
+        for med_rec in self.db.medical_records:
+            if med_rec.patient_id == pat_id:
+                print(f"{med_rec.record_id}, {med_rec.patient_id}, {med_rec.doctor_id}, {med_rec.consultation_details}, {med_rec.diagnosis}, {med_rec.record_date}")
+                found = True
+
+        if not found:
+            print("Medical Record not found for the specified Patient")
 
     def admin_manage_doctors(self):
         while True:

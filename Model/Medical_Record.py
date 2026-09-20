@@ -6,6 +6,3 @@ class Medical_Record:
         self.consultation_details = consultation_details
         self.diagnosis = diagnosis
         self.record_date = record_date
-
-    def get_medical_records(self):
-        return f"{self.record_id}, {self.patient_id}, {self.doctor_id}, {self.consultation_details}, {self.diagnosis}, {self.record_date}"

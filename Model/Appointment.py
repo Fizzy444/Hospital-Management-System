@@ -6,6 +6,3 @@ class Appointment:
         self.appointment_date = appointment_date
         self.appointment_time = appointment_time
         self.status = status
-
-    def get_appointment_details(self):
-        return f"{self.appointment_id}, {self.patient_id}, {self.doctor_id}, {self.appointment_date}, {self.appointment_time}, {self.status}"
