@@ -55,8 +55,7 @@ class PatientController:
             print("2.Book an Appointment")
             print("3.View my Appointments")
             print("4.Cancel Appointments")
-            print("5.View Doctors")
-            print("6.Logout")
+            print("5.Logout")
 
             try:
                 ch = int(input("Enter your choice: "))
@@ -64,9 +63,11 @@ class PatientController:
                     print(f"Patiend_ID: {patient.patient_id} | Name: {patient.name} | Age: {patient.age} | Contact_Details: {patient.contact_details}")
                 elif ch == 2:
                     apt_controller.book_an_appointment()
-
-
-                elif ch == 6:
+                elif ch == 3:
+                    apt_controller.view_my_appointment()
+                elif ch == 4:
+                    apt_controller.cancel_appointment()
+                elif ch == 5:
                     print("Logging Out...")
                     break
                 else:

@@ -31,4 +31,25 @@ class AppointmentController:
         print(f"Successfully Booked Appointment ID:{new_apt.appointment_id} for {date} at {time}")
 
     def view_my_appointment(self):
-        pass
+        found = False
+        for apt in self.db.appointments:
+            if apt.patient_id == self.patient.patient_id:
+                print(f"{apt.appointment_id} | {apt.patient_id} | {apt.doctor_id} | {apt.appointment_date} | {apt.appointment_time} | {apt.status}")
+                found = True
+        if not found:
+            print("No Appointments done")
+
+    def cancel_appointment(self):
+        apt_id = int(input("Enter Appointment_ID to Cancel: "))
+        for apt in self.db.appointments:
+            if apt.patient_id == self.patient.patient_id:
+                print("Found appointment:")
+                print(f"{apt.appointment_id} | {apt.patient_id} | {apt.doctor_id} | {apt.appointment_date} | {apt.appointment_time} | {apt.status}")
+                ch = input("Are you sure you wanna Cancel Appointment (Y/N): ").upper()
+                if ch == "Y":
+                    apt.status = "Cancelled"
+                    print("Successfully Cancleld Appointment")
+                elif ch == "N":
+                    print("Aborting...")
+                else:
+                    print("Enter a Valid number")
