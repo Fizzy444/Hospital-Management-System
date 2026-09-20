@@ -5,12 +5,11 @@ from Model.Patient import Patient
 class PatientController:
     def __init__(self, database):
         self.db = database
-        self.nxt_patient_id = 0
         self.patient = None
 
     def register(self):
         try:
-            self.nxt_patient_id += 1
+            self.db.nxt_patient_id += 1
             name = input("Enter name: ")
             age = int(input("Enter Age: "))
             if age < 1:
@@ -19,10 +18,10 @@ class PatientController:
             contact_details = int(input("Enter Phone number: "))
             password = input("Enter password: ")
 
-            self.patient = Patient(self.nxt_patient_id, name, age, contact_details, password)
+            self.patient = Patient(self.db.nxt_patient_id, name, age, contact_details, password)
             self.db.patients.append(self.patient)
             print("---Registered the patient successfully---")
-            print(f"Your Patient_ID is {self.nxt_patient_id}")
+            print(f"Your Patient_ID is {self.db.nxt_patient_id}")
 
         except ValueError:
             print("Enter a valid number")
@@ -55,7 +54,8 @@ class PatientController:
             print("2.Book an Appointment")
             print("3.View my Appointments")
             print("4.Cancel Appointments")
-            print("5.Logout")
+            print("5.View my Prescriptions")
+            print("6.Logout")
 
             try:
                 ch = int(input("Enter your choice: "))
@@ -68,6 +68,8 @@ class PatientController:
                 elif ch == 4:
                     apt_controller.cancel_appointment()
                 elif ch == 5:
+
+                elif ch == 6:
                     print("Logging Out...")
                     break
                 else:

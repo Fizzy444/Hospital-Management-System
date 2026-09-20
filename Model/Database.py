@@ -9,3 +9,9 @@ class Database:
         self.prescriptions = []
         self.prescription_items = []
         self.room_beds = []
+
+        self.nxt_patient_id = 0
+        self.nxt_doctor_id = 0
+        self.nxt_prescription_id = 0
+        self.nxt_medical_record_id = 0
+        self.nxt_item_id = 0

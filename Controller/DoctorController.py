@@ -1,16 +1,10 @@
+from Controller.MedicalRecordController import MedicalRecordController
 from Model.Doctor import Doctor
-from Model.Medical_Record import Medical_Record
-from Model.Prescription import Prescription
-from Model.Prescription_Item import Prescription_Item
 
 
 class DoctorController:
     def __init__(self, database):
         self.db = database
-        self.nxt_doctor_id = 0
-        self.nxt_prescription_id = 0
-        self.nxt_medical_record_id = 0
-        self.nxt_item_id = 0
         self.doc = None
 
     def login(self):
@@ -33,6 +27,7 @@ class DoctorController:
             self.doctor_dashboard(doc)
 
     def doctor_dashboard(self, doc):
+        med_rec = MedicalRecordController(self.db, doc)
         while True:
             print(f"\n---{doc.doctor_name}'s Dashboard---")
             print("1.View My Appointments")
@@ -46,9 +41,9 @@ class DoctorController:
                 if ch == 1:
                     self.view_appointments(doc)
                 elif ch == 2:
-                    self.add_medical_record(doc)
+                    med_rec.add_medical_record(doc)
                 elif ch == 3:
-                    self.write_prescription(doc)
+                    med_rec.write_prescription(doc)
                 elif ch == 4:
                     self.view_medical_history()
                 elif ch == 5:
@@ -67,59 +62,6 @@ class DoctorController:
                 found = True
         if not found:
             print("No Appointments available")
-
-    def add_medical_record(self, doc):
-        pat_id = int(input("Enter PatientID: "))
-        consult = input("Enter Consultation Details: ")
-        diagnosis = input("Enter Diagnosis Details: ")
-
-        import datetime
-
-        day = datetime.datetime.now(tz=datetime.UTC).date()
-        today = day.strftime("%d-%m-%Y")
-
-        self.nxt_medical_record_id += 1
-        med_rec = Medical_Record(self.nxt_medical_record_id, pat_id, doc.doctor_id, consult, diagnosis, today)
-        self.db.medical_records.append(med_rec)
-        print("Successfully Added Medical Record")
-
-    def write_prescription(self, doc):
-        pat_id = int(input("Enter PatientID: "))
-        med_rec = None
-        for mr in self.db.medical_record[::-1]:
-            if mr.patient_id == pat_id:
-                med_rec = mr
-                break
-
-        if med_rec is None:
-            print("No Records Available for this Patient, to add Prescription create a medical record")
-            return
-
-        import datetime
-
-        day = datetime.datetime.now(tz=datetime.UTC).date()
-        today = day.strftime("%d-%m-%Y")
-
-        self.nxt_prescription_id += 1
-        pres = Prescription(self.nxt_prescription_id, med_rec.record_id, pat_id, doc.doctor_id, today)
-        self.db.prescriptions.append(pres)
-        print("Successfully Created Prescription")
-
-        while True:
-            med_name = input("Enter Medicine name: ")
-            dosage = input("Enter Dosage: ")
-            duration = input("Enter Duration: ")
-            instruct = input("Enter Instructions: ")
-
-            self.nxt_item_id += 1
-            pres_item = Prescription_Item(self.nxt_item_id, self.nxt_prescription_id, med_name, dosage, duration, instruct)
-            self.db.prescription_items.append(pres_item)
-            print("Successfully Added Prescription Item")
-            ch = input("Add Another? (Y/N): ").upper()
-            if ch == "N":
-                break
-        print("Prescription Saved Successfully")
-
 
     def view_medical_history(self):
         pat_id = int(input("Enter Patient ID to view Medical History: "))
@@ -166,8 +108,8 @@ class DoctorController:
         specialization = input("Enter Specialization: ").lower()
         available = True
         password = input("Enter Password: ")
-        self.nxt_doctor_id += 1
-        self.doc = Doctor(self.nxt_doctor_id, name, dept_id, specialization, available, password)
+        self.db.nxt_doctor_id += 1
+        self.doc = Doctor(self.db.nxt_doctor_id, name, dept_id, specialization, available, password)
         self.db.doctors.append(self.doc)
         print("Added Doctor Successfully...")
 
