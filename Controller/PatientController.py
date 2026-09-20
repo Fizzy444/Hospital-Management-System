@@ -1,4 +1,5 @@
 from Controller.AppointmentController import AppointmentController
+from Controller.BillController import BillController
 from Model.Patient import Patient
 
 
@@ -46,7 +47,8 @@ class PatientController:
             self.patient_dashboard(patient)
 
     def patient_dashboard(self, patient):
-        apt_controller = AppointmentController(self.db, patient)
+        self.apt_controller = AppointmentController(self.db, patient)
+        self.bill_controller = BillController(self.db)
         while True:
             print(f"\n{patient.name}'s Dashboard")
             print("1.View My Profile")
@@ -54,21 +56,27 @@ class PatientController:
             print("3.View my Appointments")
             print("4.Cancel Appointments")
             print("5.View my Prescriptions")
-            print("6.Logout")
+            print("6.View my Bills")
+            print("7.Pay my Bills")
+            print("7.Logout")
 
             try:
                 ch = int(input("Enter your choice: "))
                 if ch == 1:
                     print(f"Patiend_ID: {patient.patient_id} | Name: {patient.name} | Age: {patient.age} | Contact_Details: {patient.contact_details}")
                 elif ch == 2:
-                    apt_controller.book_an_appointment()
+                    self.apt_controller.book_an_appointment()
                 elif ch == 3:
-                    apt_controller.view_my_appointment()
+                    self.apt_controller.view_my_appointment()
                 elif ch == 4:
-                    apt_controller.cancel_appointment()
+                    self.apt_controller.cancel_appointment()
                 elif ch == 5:
                     self.view_prescription(patient)
                 elif ch == 6:
+                    self.bill_controller.view_bill(patient)
+                elif ch == 7:
+                    self.bill_controller.pay_bill(patient)
+                elif ch == 8:
                     print("Logging Out...")
                     break
                 else:
@@ -80,7 +88,7 @@ class PatientController:
         found = False
 
         for pres in self.db.prescriptions:
-            if pres.patiend_id == patient.patient_id:
+            if pres.patient_id == patient.patient_id:
                 found = True
                 print(f"\nDate: {pres.prescription_date} | Prescribed by {pres.doctor_id}")
                 print("Medicines:")

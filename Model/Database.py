@@ -12,6 +12,8 @@ class Database:
 
         self.nxt_patient_id = 0
         self.nxt_doctor_id = 0
+        self.nxt_appointment_id = 0
         self.nxt_prescription_id = 0
         self.nxt_medical_record_id = 0
         self.nxt_item_id = 0
+        self.nxt_bill_id = 0

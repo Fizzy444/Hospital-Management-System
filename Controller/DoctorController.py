@@ -27,7 +27,7 @@ class DoctorController:
             self.doctor_dashboard(doc)
 
     def doctor_dashboard(self, doc):
-        med_rec = MedicalRecordController(self.db, doc)
+        self.med_rec = MedicalRecordController(self.db)
         while True:
             print(f"\n---{doc.doctor_name}'s Dashboard---")
             print("1.View My Appointments")
@@ -41,11 +41,11 @@ class DoctorController:
                 if ch == 1:
                     self.view_appointments(doc)
                 elif ch == 2:
-                    med_rec.add_medical_record(doc)
+                    self.med_rec.add_medical_record(doc)
                 elif ch == 3:
-                    med_rec.write_prescription(doc)
+                    self.med_rec.write_prescription(doc)
                 elif ch == 4:
-                    med_rec.view_medical_history()
+                    self.med_rec.view_medical_history()
                 elif ch == 5:
                     print("Logging Out...")
                     break

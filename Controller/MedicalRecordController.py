@@ -4,9 +4,8 @@ from Model.Prescription_Item import Prescription_Item
 
 
 class MedicalRecordController:
-    def __init__(self, database, doc):
+    def __init__(self, database):
         self.db = database
-        self.doc = doc
 
     def add_medical_record(self, doc):
         pat_id = int(input("Enter PatientID: "))
