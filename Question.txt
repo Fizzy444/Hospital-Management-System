@@ -1,0 +1,45 @@
+Hospital Management System
+
+1. Patient Registration and Authentication:
+Patients should be able to register by providing their name, age, contact details, and other basic information.
+The system should generate a unique patient ID for each patient.
+Patients should be able to log in and view their profile.
+
+2. Doctor Management:
+The hospital should maintain information about doctors, including name, specialization, department, and availability.
+Administrators should be able to add, update, and remove doctor details.
+Patients should be able to view doctors based on their specialization.
+
+3. Appointment Booking:
+Patients should be able to search for available doctors and book appointments.
+The system should store the appointment date, time, doctor, and patient details.
+Patients should be able to cancel or reschedule their appointments.
+
+4. Patient Medical Records:
+Doctors should be able to add consultation details, diagnosis, and prescriptions for patients.
+The system should maintain the patient's previous medical records.
+Doctors should be able to view a patient's history during a consultation.
+
+5. Medicine and Prescription Management:
+Doctors should be able to prescribe medicines to patients.
+Prescription information may include medicine name, dosage, duration, and instructions.
+Patients should be able to view their current and previous prescriptions.
+
+6. Billing and Payment:
+The system should generate bills for consultations, medicines, tests, and other hospital services.
+Patients should be able to view their total bill and payment status.
+The system should support different payment statuses such as Pending, Paid, and Partially Paid.
+
+7. Room/Bed Management:
+The hospital should maintain information about available and occupied rooms or beds.
+Patients who require admission should be assigned an available bed.
+The system should record admission date, discharge date, room number, and associated charges.
+
+Expected Features to Build:
+Patient registration and login
+Doctor and department management
+Appointment booking and cancellation
+Medical record management
+Prescription and medicine management
+Billing and payment management
+Room and bed allocation
