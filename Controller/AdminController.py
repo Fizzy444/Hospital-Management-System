@@ -10,7 +10,7 @@ class AdminController:
 
     def login(self):
         print("\nAdmin Login...")
-        name = input("Enter adminID; ")
+        name = input("Enter adminID: ")
         pwd = input("Enter Password: ")
 
         if name == self.__adminID and pwd == self.__adminPassword:

@@ -27,6 +27,42 @@ class DoctorController:
             self.doctor_dashboard(doc)
 
     def doctor_dashboard(self, doc):
+        while True:
+            print(f"\n---{doc.doctor_name}'s Dashboard---")
+            print("1.View My Appointments")
+            print("2.Add Medical Records for a Patient")
+            print("3.Write a Prescription")
+            print("4.View Medical History of a Patient")
+            print("5.Log Out")
+
+            try:
+                ch = int(input("Enter your choice: "))
+                if ch == 1:
+                    self.view_appointments()
+                elif ch == 2:
+                    self.add_medical_record()
+                elif ch == 3:
+                    self.write_prescription()
+                elif ch == 4:
+                    self.view_medical_history()
+                elif ch == 5:
+                    print("Logging Out...")
+                    break
+                else:
+                    print("Enter a Valid number")
+            except ValueError:
+                print("Enter a Valid number")
+
+    def view_appointments(self):
+        pass
+
+    def add_medical_record(self):
+        pass
+
+    def write_prescription(self):
+        pass
+
+    def view_medical_history(self):
         pass
 
     def admin_manage_doctors(self):
