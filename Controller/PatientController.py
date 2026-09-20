@@ -5,7 +5,6 @@ from Model.Patient import Patient
 class PatientController:
     def __init__(self, database):
         self.db = database
-        self.patient = None
 
     def register(self):
         try:
@@ -68,7 +67,7 @@ class PatientController:
                 elif ch == 4:
                     apt_controller.cancel_appointment()
                 elif ch == 5:
-
+                    self.view_prescription(patient)
                 elif ch == 6:
                     print("Logging Out...")
                     break
@@ -76,3 +75,20 @@ class PatientController:
                     print("Enter a Valid number")
             except ValueError:
                 print("Enter a Valid number")
+
+    def view_prescription(self, patient):
+        found = False
+
+        for pres in self.db.prescriptions:
+            if pres.patiend_id == patient.patient_id:
+                found = True
+                print(f"\nDate: {pres.prescription_date} | Prescribed by {pres.doctor_id}")
+                print("Medicines:")
+
+                for item in self.db.prescription_items:
+                    if item.prescription_id == pres.prescription_id:
+                        print(f"Medicine Name: {item.medicine_name} | Dosage: {item.dosage} | Duration: {item.duration}")
+                        print(f"Instructions: {item.instructions}")
+
+        if not found:
+            print("You have no Prescriptions")

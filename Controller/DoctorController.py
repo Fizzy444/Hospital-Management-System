@@ -45,7 +45,7 @@ class DoctorController:
                 elif ch == 3:
                     med_rec.write_prescription(doc)
                 elif ch == 4:
-                    self.view_medical_history()
+                    med_rec.view_medical_history()
                 elif ch == 5:
                     print("Logging Out...")
                     break
@@ -62,18 +62,6 @@ class DoctorController:
                 found = True
         if not found:
             print("No Appointments available")
-
-    def view_medical_history(self):
-        pat_id = int(input("Enter Patient ID to view Medical History: "))
-        found = False
-
-        for med_rec in self.db.medical_records:
-            if med_rec.patient_id == pat_id:
-                print(f"{med_rec.record_id}, {med_rec.patient_id}, {med_rec.doctor_id}, {med_rec.consultation_details}, {med_rec.diagnosis}, {med_rec.record_date}")
-                found = True
-
-        if not found:
-            print("Medical Record not found for the specified Patient")
 
     def admin_manage_doctors(self):
         while True:

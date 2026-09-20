@@ -59,3 +59,15 @@ class MedicalRecordController:
             if ch == "N":
                 break
         print("Prescription Saved Successfully")
+
+    def view_medical_history(self):
+        pat_id = int(input("Enter Patient ID to view Medical History: "))
+        found = False
+
+        for med_rec in self.db.medical_records:
+            if med_rec.patient_id == pat_id:
+                print(f"{med_rec.record_id}, {med_rec.patient_id}, {med_rec.doctor_id}, {med_rec.consultation_details}, {med_rec.diagnosis}, {med_rec.record_date}")
+                found = True
+
+        if not found:
+            print("Medical Record not found for the specified Patient")
